@@ -21,13 +21,15 @@ public class NewtonTest {
 		}
 		
 		
-		double xWert1=-2 ;
+		double xWert1=-2 ;	//-2 und -4 wirft Exception 
 		double expected1=-5.0;
 		try {
 		assertEquals(expected1,Newton.newton(koef,ableitung,xWert1));
 		}catch(KeineNullstelleGefundenException e1) {
 			e1.printStackTrace();
 		}
+		
+		
 		double xWert2=10 ;
 		double expected2=2.0;
 		try {
@@ -35,6 +37,17 @@ public class NewtonTest {
 		}catch(KeineNullstelleGefundenException e1) {
 			e1.printStackTrace();
 		}
+		
+		double xWert3=3.;
+		double expected3=3;
+		double[] koef1= {0,0,-3,1};
+		double[] ableitung1= {0,-6,3};
+		
+		try {
+			assertEquals(expected3,Newton.newton(koef1,ableitung1,xWert3));
+			}catch(KeineNullstelleGefundenException e1) {
+				e1.printStackTrace();
+			}
 	}
 
 }

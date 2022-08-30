@@ -1,17 +1,35 @@
 package kurvendiskussion;
 
+import Zufallsgenerator.GanzzahligesZufallsPolynom;
+import frame.FrameErgebnis;
+
 public class test {
 	public static void main(String[] args) {
 		
 	
+		Polynom p =new GanzzahligesZufallsPolynom();
+		System.out.println(p);
 	
-	
-		Polynom pol= new Polynom("1x^3+9x^2+8x-60");
-		double[] ns=pol.nullstellen();
-		System.out.println("_______");
-		for(double k:ns) {
-			System.out.println(k);
-		}
-	 
+		
+		 Polynom pol= new Polynom("4x^3+6x^2-15x-9");//3x^3-5x^2-6x+7	,
+		 //double[] ns=pol.nullstellen();
+		// for(double k:ns) {
+		//	System.out.println(k);
+		// }	
+		double[][] ex= pol.extrema();
+		//for(int i=0;i<ex.length;i++) {
+		//	for(int j=0;j<ex[i].length;j++) {
+		//		System.out.print(" " +ex[i][j]);
+		//	}
+		//	System.out.println(" ");
+		//}
+		
+		double[][] wp=pol.wendepunkte();
+		
+		
+		//double[] a= {1,0,1}; //Imaginäre Ns
+		//Qf.abcFormel(a);
+		
+		
 	}
 }

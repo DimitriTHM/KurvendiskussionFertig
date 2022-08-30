@@ -2,7 +2,12 @@ package kurvendiskussion;
 
 public class Calculator {
 	
-	public static double calculate(double[] koef,double x) {	//x=stelle an der das Polynom(koef) ausgewertet werden soll
+	/**
+	 * @param koef, Koeffizienten des Polynoms
+	 * @param x, an dieser Stelle soll das Polynom ausgewertet werden
+	 * @return gibt den Wert des Polynoms an der Stelle x zurück
+	 */
+	public static double calculate(double[] koef,double x) {	
 		double result=0.;
 		for(int i=0;i<koef.length;i++) {
 			result += (koef[i] * Math.pow(x, i));
@@ -10,23 +15,51 @@ public class Calculator {
 		return result;
 	}
 	
-	
-public String extrema(double[] zweiteAbleitung ,double[] nullstellenErsteAbleitung){	//Nulstellen der Ableitungen
-	double ergebnis;
-	String a="";
-		for(double k : nullstellenErsteAbleitung) {
-			ergebnis =calculate(zweiteAbleitung,k);
+	/**
+	 * 
+	 * @param zweiteAbleitung, Koeffizienten der zweiten Ableitung
+	 * @param nullstelleErsteAbleitung, eine Nullstelle der ersten Ableitung
+	 * @return -1 bedeutet Minimum
+	 * 			1 bedeutet Maximum
+	 * 			0 bedeutet Sattelpunkt
+	 */
+	public static int extrema(double[] zweiteAbleitung ,double nullstelleErsteAbleitung){	
+																							
+			double ergebnis =calculate(zweiteAbleitung,nullstelleErsteAbleitung);
 			
 			if(ergebnis>0) {
-			a	+=	 " Minimum an der Stelle "+ k;
+			return -1;
 			}else if(ergebnis<0){
-			a	+= 	 " Maximum an der Stelle "+k;
+			return 1;
 			}else {
-			a	+= 	 " Wendepunkt an der Stelle "+k;
-			}
+			return 0;
+			
 		}
-		return a;
 	}
 	
+	/**
+	 * 
+	 * @param dritteAbleitung, Koeffizienten der 3. Ableitung
+	 * @param nullstelleZweiteAbleitung, eine Nullstelle der 2. Ableitung
+	 * @return -1 bedeutet LR-Wendepunkt
+	 * 			1 bedeutet RL-Wendepunkt
+	 * 			0 bedeutet 
+	 */
+	public static int wendepunkte(double[] dritteAbleitung, double nullstelleZweiteAbleitung) {	//-1 bedeutet L-R-WP, 1 gegenteil
+		
+		double ergebnis=calculate(dritteAbleitung, nullstelleZweiteAbleitung);
+		//falls hier null als ergebnis  rauskommt könnte man etwas links und etwas rechts von der Wendestelle den wert der zweiten ableitung ermitteln und dadurch den wp festlegen
+		//man könnte es auch nur mit der zweiten ABleitung machen
+		if(ergebnis>0) {
+			return 1; 
+		}else if(ergebnis<0) {
+			return -1;
+		}else {
+			return 0;
+			
+		}
+		
+		
+	}
 	
 }

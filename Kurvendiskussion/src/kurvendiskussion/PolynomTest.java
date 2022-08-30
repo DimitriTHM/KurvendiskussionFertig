@@ -1,5 +1,7 @@
 package kurvendiskussion;
 
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
 //import java.util.concurrent.TimeUnit;
@@ -9,7 +11,10 @@ import org.junit.jupiter.api.Test;
 
 
 class PolynomTest {
+	
 	Polynom a= new Polynom("-5x^3+3x^2-4x+6");
+	
+	
 	@Test
 	void testGetKoeffizienten() {
 		
@@ -19,7 +24,6 @@ class PolynomTest {
 	}
 	
 	@Test
-	//@Timeout(value =1 ,unit = TimeUnit.MILLISECONDS)
 	void testToString() {
 		
 		String expected ="6.0 -4.0 3.0 -5.0 ";
@@ -27,13 +31,6 @@ class PolynomTest {
 		assertEquals(expected,a.toString());
 	}
 	
-	/*	//calculate ist im moment keine methode
-	void testCalculate() {
-		double x=0.5;
-		double expected = 33/8.0;	//		33/8 ist integer rechnung -> =4 ; 33/8f ist aber auch möglich
-		assertEquals(expected,a.calculate(x));
-	}
-	*/
 	@Test 
 	void TestAbleitung() {
 		double[] pol= {6.0,-4.0,3.0,-5.0};
@@ -44,7 +41,26 @@ class PolynomTest {
 		
 	}
 	
-
+	@Test
+	void TestGrad() {
+		String s="-15x^18";
+		int expected=18;
+		assertEquals(expected,Polynom.grad(s));
+	}
+	
+	@Test
+	void TestGrad_1() {
+		String s="15";
+		int expected=0;
+		assertEquals(expected,Polynom.grad(s));
+	}
+	
+	@Test
+	void TestCoeffizientsAsDouble() {
+		String[] s= {"5x^5","-19"};
+		double[] expected= {-19.,0.,0.,0.,0.,5.};
+		assertArrayEquals(expected, Polynom.coefficientsAsDouble(s));
+	}
 	
 	
 }
