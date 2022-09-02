@@ -86,7 +86,7 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 		this.nullstellen=new double[koeffizienten.length-1];
 		this.extrema=new double[koeffizienten.length-2][2];
 		this.wendepunkte= new double[koeffizienten.length-3][2];
-		System.out.println("Hallo");
+		
 	}
 	
 	/**
