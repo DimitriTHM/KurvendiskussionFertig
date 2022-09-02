@@ -1,5 +1,10 @@
 package Zufallsgenerator;
 
+/**
+ * gibt ein Array von Koeffizienten mit reellen Zahlen zurück
+ * 
+ *
+ */
 public class Zufallszahlen {
 	double[] koeffizienten;
 	

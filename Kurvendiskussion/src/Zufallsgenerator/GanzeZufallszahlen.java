@@ -1,5 +1,10 @@
 package Zufallsgenerator;
 
+/**
+ * 
+ * gibt ein Array von Koeffizienten mit ganzen Zahlen zurück
+ *
+ */
 public class GanzeZufallszahlen {
 	double[] koeffizienten;
 	

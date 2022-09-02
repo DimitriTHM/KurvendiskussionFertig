@@ -1,5 +1,10 @@
 package kurvendiskussion;
 
+
+/**
+ * berechnet Funktionswert 
+ * und um welche Art von Extrema und Wendepunkt es sich handelt 
+ */
 public class Calculator {
 	
 	/**
@@ -43,7 +48,7 @@ public class Calculator {
 	 * @param nullstelleZweiteAbleitung, eine Nullstelle der 2. Ableitung
 	 * @return -1 bedeutet LR-Wendepunkt
 	 * 			1 bedeutet RL-Wendepunkt
-	 * 			0 bedeutet 
+	 * 			0 bedeutet kein Wendepunkt
 	 */
 	public static int wendepunkte(double[] dritteAbleitung, double nullstelleZweiteAbleitung) {	//-1 bedeutet L-R-WP, 1 gegenteil
 		

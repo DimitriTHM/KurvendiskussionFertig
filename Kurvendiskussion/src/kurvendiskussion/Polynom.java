@@ -3,8 +3,13 @@ package kurvendiskussion;
 import newton.KeineNullstelleGefundenException;
 import newton.Newton;
 
-//Funktioniert bis jetzt nur für Polynome mit ax^3+bx^2+cx+d ; a,b,c,d !=0
+/**
+ * 	Die Klasse setzt die Koeffizienten des Polynoms und führt die nötigen 
+ * 	Berechnungen für die Bestimmung der Ableitungen, Wendepunkte und Nulllstellen durch.
+ *
+ */
 public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
+
 	
 	private double[] koeffizienten;
 	private double[] ersteAbleitung;
@@ -21,12 +26,12 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 	}
 	
 	private void setKoeffizienten(String polynom) {	
-		String a= polynom.replaceAll("-", "+-");	//damit das negative Vorzeichen nicht verloren geht
-		String[] peaces0= a.split("[+]");
+		String a= polynom.replaceAll("-", "+-");	//ersetzt - mit +- , damit das negative Vorzeichen nicht verloren geht
+		String[] peaces0= a.split("[+]");			//Splittet den String bei +
 		String[] peaces;
-		double[] koef;
+		double[] koef;						
 		
-		peaces=checkIfFirstNegativ(peaces0);
+		peaces=checkIfFirstEmpty(peaces0);
 		koef= coefficientsAsDouble(peaces);
 		
 		koeffizienten =koef;
@@ -56,19 +61,35 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 		return dritteAbleitung;
 	}
 	
+	
+	public double[] getNullstellen() {
+		return nullstellen;
+	}
+
+	public double[][] getExtrema() {
+		return extrema;
+	}
+
+	public double[][] getWendepunkte() {
+		return wendepunkte;
+	}
+
+	/**
+	 * setzt dei Ableitungen und Koeffizienten des Polynoms.
+	 * @param polynom
+	 */
 	public Polynom(String polynom) {
 		this.setKoeffizienten(polynom);
 		this.setErsteAbleitung();
 		this.setZweiteAbleitung();
 		this.setDritteAbleitung();
 		this.nullstellen=new double[koeffizienten.length-1];
+		this.extrema=new double[koeffizienten.length-2][2];
+		this.wendepunkte= new double[koeffizienten.length-3][2];
 	}
 	
 	/**
-	 * Die Koeffizienten müssen in aufsteigender form übergeben werden.
-	 * D.h. der erste Koeffizient besitzt keinen x-Teil und der letzte koeffizient 
-	 * ist derjenige vor x^n, wobei n der Grad des Polynoms ist.
-	 * Bsp.: 3x^2+4x+6 wird so übergeben, {6,4,3}.
+	 * wie Zeile 67, diesmal werden die Koeffizienten übergeben
 	 */
 	public Polynom(double[] coef) {	
 		this.koeffizienten=coef;
@@ -76,8 +97,13 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 		this.setZweiteAbleitung();
 		this.setDritteAbleitung();
 		this.nullstellen=new double[koeffizienten.length-1];
+		this.extrema=new double[koeffizienten.length-2][2];
+		this.wendepunkte= new double[koeffizienten.length-3][2];
 	}
 	
+	/**
+	 * Setzt die Koeffizienten mit Leerzeichen zusammen und gibt diesen zurück
+	 */
 	@Override
 	public String toString() {
 		String string="";
@@ -88,8 +114,13 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 		
 	}
 
-	
-	private String[] checkIfFirstNegativ(String[] peaces0) {	//checkt ob der koef. vor x^3 negativ ist
+	/**
+	 * Überprüft ob der erste Eintarg im Array leer ist
+	 * und gibt in diesem Fall ein Array ohne den ersten Platz zurück
+	 * @param peaces0
+	 * @return String[]
+	 */
+	private String[] checkIfFirstEmpty(String[] peaces0) {	
 		String[] peaces;
 		
 		if(peaces0[0]==""){			//Falls erste Zahl negativ -> (+  ->   +-) -> wegen split erster Platz =""
@@ -106,54 +137,49 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 	}
 
 	/**
-	 * 
-	 private double[] coefficientsAsDouble1(String[] s) {		//konvertiert die Strings zu double Koeffizienten
-		double[]koef= new double[grad(s[0])+1];
-		for(int i=3;i>=2;i--){
-			koef[i]=Double.parseDouble(s[3-i].substring(0,s[3-i].indexOf("x^"+i)));// vlt nochmal  in einzelne schritte
-		}
-		koef[1]=Double.parseDouble(s[2].substring(0,s[2].indexOf("x")));
-		koef[0]=Double.parseDouble(s[3]);
-		
-		return koef;
-	}
+	 * konvertiert die Strings zu double Koeffizienten
+	 * @param str
+	 * @return gibt die konvertierten Strings als double zurück
 	 */
-	
-	public static double[] coefficientsAsDouble(String[] s) {//konvertiert die Strings zu double Koeffizienten
+	public static double[] coefficientsAsDouble(String[] str) {
 		int grad=0;
-		for(int i =0;i<s.length;i++) {
-			if(grad(s[i])>grad) {
-				grad=grad(s[i]);
+		for(int i =0;i<str.length;i++) {
+			if(grad(str[i])>grad) {
+				grad=grad(str[i]);
 			}
 		}
 		double[]koef= new double[grad+1];
-		for(int i=0;i<s.length;i++){
-			int index = grad(s[i]);
+		for(int i=0;i<str.length;i++){
+			int index = grad(str[i]);
 			if(index>=2) {
-				if(s[i].indexOf("x^")==0) {
+				if(str[i].indexOf("x^")==0) {
 					koef[index]=1;
 				}else {
-					koef[index]=Double.parseDouble(s[i].substring(0,s[i].indexOf("x^")));
+					koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x^")));
 				}
 			}else if(index==1) {
-				if(s[i].indexOf("x")==0) {
+				if(str[i].indexOf("x")==0) {
 					koef[index]=1;
 				}else {
-					koef[index]=Double.parseDouble(s[i].substring(0,s[i].indexOf("x")));
+					koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x")));
 				}
 			}else if(index==0) {
-				koef[index]=Double.parseDouble(s[i].substring(0,s[i].length()));
+				koef[index]=Double.parseDouble(str[i].substring(0,str[i].length()));
 			}
 			
 		}
 		return koef;
 	}
 	 
-	
-	public static int grad(String s) {	// gubt den Grad des Polynoms zurück
-		if(s.indexOf("x")>=0) {
-			if(s.indexOf("x^")>=0) {
-				return Integer.parseInt(s.substring(s.indexOf("x^")+2,s.length()));
+	/**
+	 * Ermittelt den Grad des übergebenen Strings
+	 * @param str
+	 * @return Grad des Strings
+	 */
+	public static int grad(String str) {
+		if(str.indexOf("x")>=0) {
+			if(str.indexOf("x^")>=0) {
+				return Integer.parseInt(str.substring(str.indexOf("x^")+2,str.length()));
 			}else {
 				return 1;
 			}
@@ -161,7 +187,11 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 		return 0;
 	}
 	
-	
+	/**
+	 * leitet die übergebenen Koeffizienten ab
+	 * @param coef
+	 * @return Ableitung des "Polynoms", 
+	 */
 	public static double[] ableitung(double[] coef) {
 		double[] abl = new double[coef.length-1];
 		for(int i=0;i<abl.length;i++) {
@@ -170,7 +200,10 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 		return abl;
 	}
 	
-	public double[] nullstellen() {	//void , und einfach ns setzen extrema und wp auch so
+	/**
+	 * Ruft die Berechnung der Nullstellen auf und setzt diese in das Array this.nullstellen
+	 */
+	public void setNullstellen() {	
 	
 	if(koeffizienten.length>2) {
 		try {		//hier könntre man eine for schleife einbauenn 
@@ -189,10 +222,12 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 		nullstellen[2]=zwischen[1];
 	}
 	
-	return nullstellen;
 	}
 	
-	public double[][] extrema() {
+	/**
+	 * Berechnet die Extrema und speichert x-Wert, y-Wert und Art des Extremums
+	 */
+	public void setExtrema() {
 		this.extrema=new double[2][3];	
 		double[] zwischen=Qf.abcFormel(ersteAbleitung);
 		extrema[0][0]=zwischen[0];
@@ -202,16 +237,19 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 		extrema[1][1]=Calculator.calculate(koeffizienten, zwischen[1]);
 		extrema[1][2]=Calculator.extrema(zweiteAbleitung, extrema[1][0]);
 		
-		return extrema;
+		
 	}
 	
-	public double[][] wendepunkte() {
+	/**
+	 * Berechnet den Wendepunkt und speichert x-Wert, y-Wert und Art des Wendepunkts
+	 */
+	public void setWendepunkte() {
 		this.wendepunkte=new double[1][3];
 		wendepunkte[0][0]=-zweiteAbleitung[0]/zweiteAbleitung[1];
 		wendepunkte[0][1]=Calculator.calculate(koeffizienten, wendepunkte[0][0]);
 		wendepunkte[0][2]=Calculator.wendepunkte(dritteAbleitung, wendepunkte[0][0]);
 		
-		return wendepunkte;
+		
 	}
 	
 }

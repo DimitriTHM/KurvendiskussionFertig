@@ -12,11 +12,13 @@ public class test {
 	
 		
 		 Polynom pol= new Polynom("4x^3+6x^2-15x-9");//3x^3-5x^2-6x+7	,
+		 pol.setExtrema();
+		 pol.setWendepunkte();
 		 //double[] ns=pol.nullstellen();
 		// for(double k:ns) {
 		//	System.out.println(k);
 		// }	
-		double[][] ex= pol.extrema();
+		double[][] ex= pol.getExtrema();
 		//for(int i=0;i<ex.length;i++) {
 		//	for(int j=0;j<ex[i].length;j++) {
 		//		System.out.print(" " +ex[i][j]);
@@ -24,7 +26,7 @@ public class test {
 		//	System.out.println(" ");
 		//}
 		
-		double[][] wp=pol.wendepunkte();
+		double[][] wp=pol.getWendepunkte();
 		
 		
 		//double[] a= {1,0,1}; //Imaginäre Ns
