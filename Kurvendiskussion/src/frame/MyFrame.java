@@ -171,13 +171,16 @@ public class MyFrame extends JFrame implements ActionListener {
 			
 			//Abfrage, welche Aktion ausgeführt werden soll
 			if(checkBox[0].isSelected()) {	//Nulstellen berechnen
+				p.setNullstellen();
 				ns = p.getNullstellen();
 				
 			}
 			if(checkBox[1].isSelected()) {	//Extrema berechnen
+				p.setExtrema();
 				ex=p.getExtrema();
 			}
 			if(checkBox[2].isSelected()) {	//Wendepunkte berechnen
+				p.setWendepunkte();
 				wp=p.getWendepunkte();
 					
 			}
