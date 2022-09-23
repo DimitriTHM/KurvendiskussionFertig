@@ -1,7 +1,11 @@
 package kurvendiskussion;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import Zufallsgenerator.GanzzahligesZufallsPolynom;
 import frame.FrameErgebnis;
+import newton.KeineNullstelleGefundenException;
+import newton.Newton;
 
 public class test {
 	public static void main(String[] args) {
@@ -31,6 +35,7 @@ public class test {
 		
 		//double[] a= {1,0,1}; //Imaginäre Ns
 		//Qf.abcFormel(a);
+		//System.out.println(Polynom.grad("-15x^-18.5"));
 		
 		
 	}

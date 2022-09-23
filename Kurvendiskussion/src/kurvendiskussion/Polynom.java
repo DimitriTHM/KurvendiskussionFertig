@@ -1,5 +1,7 @@
 package kurvendiskussion;
 
+import frame.HilfeFenster;
+import frame.MyFrame;
 import newton.KeineNullstelleGefundenException;
 import newton.Newton;
 
@@ -8,10 +10,10 @@ import newton.Newton;
  * 	Berechnungen für die Bestimmung der Ableitungen, Wendepunkte und Nulllstellen durch.
  *
  */
-public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
+public class Polynom{	
 
-	
-	private double[] koeffizienten;
+	private int grad;
+	private double[] koeffizienten;	//private damit es von uns (oder anderen Entwicklern) nicht versehentlich geändert wird 
 	private double[] ersteAbleitung;
 	private double[] zweiteAbleitung;
 	private double[] dritteAbleitung;
@@ -78,7 +80,7 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 	 * setzt dei Ableitungen und Koeffizienten des Polynoms.
 	 * @param polynom
 	 */
-	public Polynom(String polynom) {
+	public Polynom(String polynom) { //koef ermitteln dann Polynom(koef) aufrufen
 		this.setKoeffizienten(polynom);
 		this.setErsteAbleitung();
 		this.setZweiteAbleitung();
@@ -102,18 +104,6 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 		this.wendepunkte= new double[koeffizienten.length-3][2];
 	}
 	
-	/**
-	 * Setzt die Koeffizienten mit Leerzeichen zusammen und gibt diesen zurück
-	 */
-	@Override
-	public String toString() {
-		String string="";
-		for(double k:koeffizienten) {
-			string+=k + " ";
-		}
-		return string;
-		
-	}
 
 	/**
 	 * Überprüft ob der erste Eintarg im Array leer ist
@@ -125,7 +115,7 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 		String[] peaces;
 		
 		if(peaces0[0]==""){			//Falls erste Zahl negativ -> (+  ->   +-) -> wegen split erster Platz =""
-			peaces= new String[peaces0.length-1];
+			// braucht man nicht peaces= new String[peaces0.length-1];
 			String[] helper=new String[peaces0.length-1];
 			for(int i=0;i<peaces0.length-1;i++) {
 				helper[i]=peaces0[i+1];
@@ -142,16 +132,20 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 	 * @param str
 	 * @return gibt die konvertierten Strings als double zurück
 	 */
-	public static double[] coefficientsAsDouble(String[] str) {
+	public static double[] coefficientsAsDouble(String[] str) {	
+		
+		//ermittelt den Grad des Polynoms
 		int grad=0;
 		for(int i =0;i<str.length;i++) {
 			if(grad(str[i])>grad) {
 				grad=grad(str[i]);
 			}
 		}
+		
+		
 		double[]koef= new double[grad+1];
 		for(int i=0;i<str.length;i++){
-			int index = grad(str[i]);
+			int index = grad(str[i]);// An welche stelle im Array "koef" kommt der Koeffizient? Z.B. 7x^2, koef[3]=7
 			if(index>=2) {
 				if(str[i].indexOf("x^")==0) {
 					koef[index]=1;
@@ -165,7 +159,11 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 					koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x")));
 				}
 			}else if(index==0) {
-				koef[index]=Double.parseDouble(str[i].substring(0,str[i].length()));
+				if(str[i].indexOf("x")!=-1) {
+					koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x")));
+				}else {
+					koef[index]=Double.parseDouble(str[i].substring(0,str[i].length()));
+				}
 			}
 			
 		}
@@ -179,8 +177,14 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 	 */
 	public static int grad(String str) {
 		if(str.indexOf("x")>=0) {
-			if(str.indexOf("x^")>=0) {
-				return Integer.parseInt(str.substring(str.indexOf("x^")+2,str.length()));
+			if(str.indexOf("x^")>=0) {	//>0 abragen
+				try {
+					int grad = Integer.parseInt(str.substring(str.indexOf("x^")+2,str.length()));
+					return grad;
+				}catch(NumberFormatException e) {
+					new HilfeFenster();
+					System.exit(0);
+				}
 			}else {
 				return 1;
 			}
@@ -226,7 +230,7 @@ public class Polynom{	//x^4 könnte ein problem bei extrema haben f(0)=0 ist tp;
 	}
 	
 	/**
-	 * Berechnet die Extrema und speichert x-Wert, y-Wert und Art des Extremums
+	 * Berechnet die Extrema und speichert x-Wert, y-Wert und Art des Extremums in dieser Reihenfolge
 	 */
 	public void setExtrema() {
 		this.extrema=new double[2][3];	

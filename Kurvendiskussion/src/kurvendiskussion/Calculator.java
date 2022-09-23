@@ -50,7 +50,7 @@ public class Calculator {
 	 * 			1 bedeutet RL-Wendepunkt
 	 * 			0 bedeutet kein Wendepunkt
 	 */
-	public static int wendepunkte(double[] dritteAbleitung, double nullstelleZweiteAbleitung) {	//-1 bedeutet L-R-WP, 1 gegenteil
+	public static int wendepunkte(double[] dritteAbleitung, double nullstelleZweiteAbleitung) {	
 		
 		double ergebnis=calculate(dritteAbleitung, nullstelleZweiteAbleitung);
 		//falls hier null als ergebnis  rauskommt könnte man etwas links und etwas rechts von der Wendestelle den wert der zweiten ableitung ermitteln und dadurch den wp festlegen

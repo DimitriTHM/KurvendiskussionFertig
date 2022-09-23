@@ -10,7 +10,7 @@ import jserver.Dialogs;
  *
  *
  */
-public class Qf { 
+public class Qf { //Sollte vlt ins package newton
 	
 	/**
 	 * Nutzt ABC-Formel zur Berechnung der Nullstellen

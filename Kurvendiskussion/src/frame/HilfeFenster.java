@@ -1,5 +1,6 @@
 package frame;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.JDialog;
@@ -12,7 +13,7 @@ import javax.swing.JLabel;
 public class HilfeFenster {
 	
 	JDialog hilfeDialog;
-	JLabel[] label= new JLabel[4];
+	JLabel[] label= new JLabel[5];
 	
 	public HilfeFenster() {
 		
@@ -23,11 +24,13 @@ public class HilfeFenster {
 		hilfeDialog.setLocationRelativeTo(null);// Fenster erscheint in der Mitte des Bildschirms
 		label[0]=new JLabel("   1. Wählen Sie aus, was für ein Polynom Sie eingeben wollen.");
 		label[1]=new JLabel("   2. Wählen Sie aus, was berechnet werden soll.");
-		label[2]=new JLabel("   3. Button 'berechnen' anklicken.");
-		label[3]=new JLabel("   Das Programm führt die Berechnungen durch. Viel Spaß!");
-		hilfeDialog.setLayout(new GridLayout(4,0));
+		label[2]=new JLabel("   Nur ganze, positive Zahlen für die Exponenten verwenden!");
+		label[2].setForeground(Color.RED);
+		label[3]=new JLabel("   3. Button 'berechnen' anklicken.");
+		label[4]=new JLabel("   Das Programm führt die Berechnungen durch. Viel Spaß!");
+		hilfeDialog.setLayout(new GridLayout(5,0));
 		//hinzufügen der Labels zum Dialog-Fenster
-		for(int i=0;i<4;i++) {
+		for(int i=0;i<5;i++) {
 			hilfeDialog.add(label[i]);
 		}
 		

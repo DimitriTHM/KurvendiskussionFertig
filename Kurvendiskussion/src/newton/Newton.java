@@ -36,6 +36,7 @@ public class Newton {
 		}
 		
 		xn1=xn-Calculator.calculate(koef, xn)/Calculator.calculate(ableitung, xn);
+		iterationen+=1;
 		
 		if(xn1==xn) {
 			System.out.println("Iteration hat nach " + iterationen + " iterationen die Nullstelle "+ xn+" gefunden");
@@ -43,7 +44,7 @@ public class Newton {
 		}
 		
 		xn2=xn1-Calculator.calculate(koef, xn1)/Calculator.calculate(ableitung, xn1);
-		iterationen+=2;
+		iterationen+=1;
 		
 		do{
 		xn=xn1;
@@ -58,7 +59,7 @@ public class Newton {
 		
 		if(iterationen>=maxIterationen) {
 			throw new KeineNullstelleGefundenException("Iteration kommt nach " + iterationen+ " iterationen zu keiner Nullstelle!");
-		}else if(xn==xn2) {
+		}else if(xn==xn2 && xn!=xn1) { //wenn xn = xn2 und xn1 dann Wert gefunden
 			throw new KeineNullstelleGefundenException("Iteration hängt zwischen zwei Werten fest!");
 		}else{
 			System.out.println("Iteration hat nach " + iterationen + " iterationen die Nullstelle "+ xn2+" gefunden");
