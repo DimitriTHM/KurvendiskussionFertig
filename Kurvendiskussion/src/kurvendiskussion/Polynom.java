@@ -244,30 +244,35 @@ public class Polynom{
 	 * Ruft die Berechnung der Nullstellen auf und setzt diese in das Array this.nullstellen
 	 */
 	public void setNullstellen() {	
+		this.nullstellen=berechneNullstellen(koeffizienten);
 	
-	double[] koefPolGrad2;
-	if(koeffizienten.length>3) {//war vorher 2 (wieso???)
-		this.nullstellen=new double[3];
-		try {		//hier könntre man eine for schleife einbauenn 
-			nullstellen[0]= Newton.newton(koeffizienten, ersteAbleitung, koeffizienten[0]);
-		}catch(KeineNullstelleGefundenException e1) {
-			e1.printStackTrace();
-		}
-		double[] divisor={-nullstellen[0],1}; //Division mit Nullstelle ns: (x-ns)
-		koefPolGrad2=Polynomdivision.division(koeffizienten,divisor);
-		double[] zwischen=Qf.abcFormel(koefPolGrad2);
-		nullstellen[1]=zwischen[0];
-		nullstellen[2]=zwischen[1];
-		
-	}else if(koeffizienten.length==3){
-		koefPolGrad2=koeffizienten;
-		double[] zwischen=Qf.abcFormel(koefPolGrad2);
-		this.nullstellen=zwischen;
-	}else{
-		double[] ns= {-koeffizienten[0]/koeffizienten[1]};
-		this.nullstellen=ns;
 	}
 	
+	public double[] berechneNullstellen(double[] koef) {	
+		double[] ns;
+		double[] koefPolGrad2;
+		if(koef.length>3) {
+			ns=new double[3];
+			try {		//hier könntre man eine for schleife einbauenn 
+				ns[0]= Newton.newton(koef, ableitung(koef), koef[0]);
+			}catch(KeineNullstelleGefundenException e1) {
+				e1.printStackTrace();
+			}
+			double[] divisor={-ns[0],1}; //Division mit Nullstelle ns: (x-ns)
+			koefPolGrad2=Polynomdivision.division(koef,divisor);
+			double[] zwischen=Qf.abcFormel(koefPolGrad2);
+			ns[1]=zwischen[0];
+			ns[2]=zwischen[1];
+			
+		}else if(koef.length==3){
+			koefPolGrad2=koef;
+			double[] zwischen=Qf.abcFormel(koefPolGrad2);
+			ns=zwischen;
+		}else{
+			double[] zwischen= {-koef[0]/koef[1]};
+			ns=zwischen;
+		}
+		return ns;
 	
 	}
 	
@@ -275,14 +280,13 @@ public class Polynom{
 	 * Berechnet die Extrema und speichert x-Wert, y-Wert und Art des Extremums in dieser Reihenfolge
 	 */
 	public void setExtrema() {
-		this.extrema=new double[2][3];	
-		double[] zwischen=Qf.abcFormel(ersteAbleitung);
-		extrema[0][0]=zwischen[0];
-		extrema[0][1]=Calculator.calculate(koeffizienten, zwischen[0]);
-		extrema[0][2]=Calculator.extrema(zweiteAbleitung, extrema[0][0]);
-		extrema[1][0]=zwischen[1];
-		extrema[1][1]=Calculator.calculate(koeffizienten, zwischen[1]);
-		extrema[1][2]=Calculator.extrema(zweiteAbleitung, extrema[1][0]);
+		this.extrema=new double[koeffizienten.length-2][3];	
+		double[] nsErsteAbleitung=berechneNullstellen(ersteAbleitung);
+		for(int i =0;i<koeffizienten.length-2;i++) {
+			extrema[i][0]=nsErsteAbleitung[i];
+			extrema[i][1]=Calculator.calculate(koeffizienten, nsErsteAbleitung[i]);
+			extrema[i][2]=Calculator.extrema(zweiteAbleitung, extrema[i][0]);
+		}
 		
 		
 	}

@@ -100,5 +100,12 @@ class PolynomTest {
 		assertArrayEquals(expected, Polynom.coefficientsAsDouble(s));
 	}
 	
+	@Test
+	void TestSetExtremaPolZweitenGrades() {
+		Polynom pol= new Polynom("x^2-1");
+		pol.setExtrema();
+		double[] expected= {0.0,-1.0,-1};
+		assertArrayEquals(expected,pol.getExtrema()[0],1.0E-15);
+	}
 	
 }

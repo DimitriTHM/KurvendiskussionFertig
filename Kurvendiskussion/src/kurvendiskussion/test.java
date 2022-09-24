@@ -36,12 +36,11 @@ public class test {
 		//double[] a= {1,0,1}; //Imaginäre Ns
 		//Qf.abcFormel(a);
 		//System.out.println(Polynom.grad("-15x^-18.5"));
-		double[] m = null;
-		double[] f= {5.0,6.0};
-		m=f;
-		double[] abl= {3.0,4.0};
-		double[] k=Polynom.ableitung(abl);
-		System.out.println(k[0]);
-		System.out.println(m[0]);
+		Polynom q = new Polynom("x^2-1");
+		q.setExtrema();
+		System.out.println(q.getExtrema()[0][0]);
+		
+		
 	}
+		
 }
