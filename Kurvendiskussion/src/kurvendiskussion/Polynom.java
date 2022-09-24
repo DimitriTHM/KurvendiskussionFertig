@@ -177,17 +177,29 @@ public class Polynom{
 					if(str[i].indexOf("x^")==0) {//bsp. x^2
 						koef[index]=1;
 					}else {
-						koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x^")));
+						if(str[i].substring(0,str[i].indexOf("x^")).equals("-")){
+							koef[index]=-1;
+						}else {
+							koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x^")));
+						}
 					}
 				}else if(index==1) {
 					if(str[i].indexOf("x")==0) {
 						koef[index]=1;
 					}else {
-						koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x")));
+						if(str[i].substring(0,str[i].indexOf("x")).equals("-")) {
+							koef[index]=-1;
+						}else {
+							koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x")));
+						}
 					}
-				}else if(index==0) {
+				}else if(index==0) {//Normalerweise Konstante, kann aber auch x^0 sein
 					if(str[i].indexOf("x")!=-1) {
-						koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x")));
+						if(str[i].substring(0,str[i].indexOf("x")).equals("-")) {
+							koef[index]=-1;
+						}else {
+							koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x")));
+						}
 					}else {
 						koef[index]=Double.parseDouble(str[i].substring(0,str[i].length()));
 					}
@@ -268,9 +280,11 @@ public class Polynom{
 			koefPolGrad2=koef;
 			double[] zwischen=Qf.abcFormel(koefPolGrad2);
 			ns=zwischen;
-		}else{
+		}else if(koef.length==2){
 			double[] zwischen= {-koef[0]/koef[1]};
 			ns=zwischen;
+		}else {//koef ist konstante
+			ns=null;
 		}
 		return ns;
 	
@@ -280,26 +294,30 @@ public class Polynom{
 	 * Berechnet die Extrema und speichert x-Wert, y-Wert und Art des Extremums in dieser Reihenfolge
 	 */
 	public void setExtrema() {
-		this.extrema=new double[koeffizienten.length-2][3];	
-		double[] nsErsteAbleitung=berechneNullstellen(ersteAbleitung);
-		for(int i =0;i<koeffizienten.length-2;i++) {
-			extrema[i][0]=nsErsteAbleitung[i];
-			extrema[i][1]=Calculator.calculate(koeffizienten, nsErsteAbleitung[i]);
-			extrema[i][2]=Calculator.extrema(zweiteAbleitung, extrema[i][0]);
-		}
-		
-		
+		if(koeffizienten.length>2) {
+			this.extrema=new double[koeffizienten.length-2][3];	
+			double[] nsErsteAbleitung=berechneNullstellen(ersteAbleitung);
+			for(int i =0;i<koeffizienten.length-2;i++) {
+				extrema[i][0]=nsErsteAbleitung[i];
+				extrema[i][1]=Calculator.calculate(koeffizienten, nsErsteAbleitung[i]);
+				extrema[i][2]=Calculator.extrema(zweiteAbleitung, extrema[i][0]);
+			}
+		}	
 	}
 	
 	/**
 	 * Berechnet den Wendepunkt und speichert x-Wert, y-Wert und Art des Wendepunkts
 	 */
 	public void setWendepunkte() {
-		this.wendepunkte=new double[1][3];
-		wendepunkte[0][0]=-zweiteAbleitung[0]/zweiteAbleitung[1];
-		wendepunkte[0][1]=Calculator.calculate(koeffizienten, wendepunkte[0][0]);
-		wendepunkte[0][2]=Calculator.wendepunkte(dritteAbleitung, wendepunkte[0][0]);
-		
+		if(koeffizienten.length>3) {
+			this.wendepunkte=new double[koeffizienten.length-3][3];
+			double[] nsZweiteAbleitung=berechneNullstellen(zweiteAbleitung);
+			for(int i = 0;i<koeffizienten.length-3;i++) {
+				wendepunkte[i][0]=nsZweiteAbleitung[i];
+				wendepunkte[i][1]=Calculator.calculate(koeffizienten, nsZweiteAbleitung[i]);
+				wendepunkte[i][2]=Calculator.wendepunkte(dritteAbleitung, nsZweiteAbleitung[i]);
+			}
+		}
 		
 	}
 	

@@ -6,7 +6,7 @@ public class TestFrame {
 	
 	public static void main(String[] args) {
 		new MyFrame();
-		
+		//x^4-5x^3+5x^2+5x-6
 		//4x^3+6x^2-15x+5  //-9
 		//1x^3-10x^2+32x-32 hat doppelte ns 4
 		

@@ -9,7 +9,7 @@ import kurvendiskussion.Calculator;
 public class Newton {
 	
 	private final static double abweichung=1.0E-15;	//= 1*10^-15
-	private final static int maxIterationen=100;
+	private final static int maxIterationen=200;
 	
 
 	/**
