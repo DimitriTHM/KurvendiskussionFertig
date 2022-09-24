@@ -12,7 +12,7 @@ import newton.Newton;
  */
 public class Polynom{	
 
-	private int grad;
+	
 	private double[] koeffizienten;	//private damit es von uns (oder anderen Entwicklern) nicht versehentlich geändert wird 
 	private double[] ersteAbleitung;
 	private double[] zweiteAbleitung;
@@ -80,14 +80,16 @@ public class Polynom{
 	 * setzt dei Ableitungen und Koeffizienten des Polynoms.
 	 * @param polynom
 	 */
-	public Polynom(String polynom) { //koef ermitteln dann Polynom(koef) aufrufen
+	public Polynom(String polynom) { 
 		this.setKoeffizienten(polynom);
 		this.setErsteAbleitung();
 		this.setZweiteAbleitung();
 		this.setDritteAbleitung();
-		this.nullstellen=new double[koeffizienten.length-1];
+		/**
+		 * this.nullstellen=new double[koeffizienten.length-1];
 		this.extrema=new double[koeffizienten.length-2][2];
 		this.wendepunkte= new double[koeffizienten.length-3][2];
+		 */
 		
 	}
 	
@@ -99,9 +101,27 @@ public class Polynom{
 		this.setErsteAbleitung();
 		this.setZweiteAbleitung();
 		this.setDritteAbleitung();
-		this.nullstellen=new double[koeffizienten.length-1];
+		/**
+		 * this.nullstellen=new double[koeffizienten.length-1];
 		this.extrema=new double[koeffizienten.length-2][2];
 		this.wendepunkte= new double[koeffizienten.length-3][2];
+		 */
+	}
+	
+	/**
+	 * gibt das Polynom in form a+bx+cx^2 zurück
+	 */
+	@Override
+	public String toString() {
+		String str="" + koeffizienten[0];
+		for(int i = 1; i<koeffizienten.length;i++) {
+			if(koeffizienten[i]>=0) {
+				str += "+" + koeffizienten[i] + "x^" + i;
+			}else {
+				str +=  koeffizienten[i] + "x^" + i;
+			}
+		}
+		return str;
 	}
 	
 
@@ -142,30 +162,41 @@ public class Polynom{
 			}
 		}
 		
+		if(grad==0) {
+			System.out.println("Keine Kurvendiskussion für Konstatnten!");
+			new HilfeFenster();
+			System.exit(0);
+		}
+		
 		
 		double[]koef= new double[grad+1];
 		for(int i=0;i<str.length;i++){
 			int index = grad(str[i]);// An welche stelle im Array "koef" kommt der Koeffizient? Z.B. 7x^2, koef[3]=7
-			if(index>=2) {
-				if(str[i].indexOf("x^")==0) {
-					koef[index]=1;
-				}else {
-					koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x^")));
+			try {
+				if(index>=2) {
+					if(str[i].indexOf("x^")==0) {//bsp. x^2
+						koef[index]=1;
+					}else {
+						koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x^")));
+					}
+				}else if(index==1) {
+					if(str[i].indexOf("x")==0) {
+						koef[index]=1;
+					}else {
+						koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x")));
+					}
+				}else if(index==0) {
+					if(str[i].indexOf("x")!=-1) {
+						koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x")));
+					}else {
+						koef[index]=Double.parseDouble(str[i].substring(0,str[i].length()));
+					}
 				}
-			}else if(index==1) {
-				if(str[i].indexOf("x")==0) {
-					koef[index]=1;
-				}else {
-					koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x")));
-				}
-			}else if(index==0) {
-				if(str[i].indexOf("x")!=-1) {
-					koef[index]=Double.parseDouble(str[i].substring(0,str[i].indexOf("x")));
-				}else {
-					koef[index]=Double.parseDouble(str[i].substring(0,str[i].length()));
-				}
+			}catch(NumberFormatException e) {
+				System.out.println("Falsche Eingabe der Koeffizienten!");
+				new HilfeFenster();
+				System.exit(0);
 			}
-			
 		}
 		return koef;
 	}
@@ -179,8 +210,7 @@ public class Polynom{
 		if(str.indexOf("x")>=0) {
 			if(str.indexOf("x^")>=0) {	//>0 abragen
 				try {
-					int grad = Integer.parseInt(str.substring(str.indexOf("x^")+2,str.length()));
-					return grad;
+					return Integer.parseInt(str.substring(str.indexOf("x^")+2,str.length()));
 				}catch(NumberFormatException e) {
 					new HilfeFenster();
 					System.exit(0);
@@ -198,11 +228,16 @@ public class Polynom{
 	 * @return Ableitung des "Polynoms", 
 	 */
 	public static double[] ableitung(double[] coef) {
-		double[] abl = new double[coef.length-1];
-		for(int i=0;i<abl.length;i++) {
-			abl[i]=coef[i+1]*(i+1);
+		if(coef.length>1) {
+			double[] abl = new double[coef.length-1];
+			for(int i=0;i<abl.length;i++) {
+				abl[i]=coef[i+1]*(i+1);
+			}
+			return abl;
+		}else {
+			double[] zwischen= {0.0};
+			return zwischen;
 		}
-		return abl;
 	}
 	
 	/**
@@ -210,22 +245,29 @@ public class Polynom{
 	 */
 	public void setNullstellen() {	
 	
-	if(koeffizienten.length>2) {
+	double[] koefPolGrad2;
+	if(koeffizienten.length>3) {//war vorher 2 (wieso???)
+		this.nullstellen=new double[3];
 		try {		//hier könntre man eine for schleife einbauenn 
 			nullstellen[0]= Newton.newton(koeffizienten, ersteAbleitung, koeffizienten[0]);
 		}catch(KeineNullstelleGefundenException e1) {
 			e1.printStackTrace();
 		}
-		double[] eingabe={-nullstellen[0],1}; //Division mit Nullstelle ns: (x-ns)
-		double[] neuesPolynom=Polynomdivision.division(koeffizienten,eingabe);
-		double[] zwischen=Qf.abcFormel(neuesPolynom);
+		double[] divisor={-nullstellen[0],1}; //Division mit Nullstelle ns: (x-ns)
+		koefPolGrad2=Polynomdivision.division(koeffizienten,divisor);
+		double[] zwischen=Qf.abcFormel(koefPolGrad2);
 		nullstellen[1]=zwischen[0];
 		nullstellen[2]=zwischen[1];
-	}else {
-		double[] zwischen=Qf.abcFormel(koeffizienten);
-		nullstellen[1]=zwischen[0];
-		nullstellen[2]=zwischen[1];
+		
+	}else if(koeffizienten.length==3){
+		koefPolGrad2=koeffizienten;
+		double[] zwischen=Qf.abcFormel(koefPolGrad2);
+		this.nullstellen=zwischen;
+	}else{
+		double[] ns= {-koeffizienten[0]/koeffizienten[1]};
+		this.nullstellen=ns;
 	}
+	
 	
 	}
 	

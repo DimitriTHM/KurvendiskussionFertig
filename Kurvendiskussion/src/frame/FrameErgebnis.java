@@ -32,7 +32,7 @@ import javax.swing.JPanel;
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	// beim Schließen des Fensters wird die Ausführung abgeschlossen
 			
 			ImageIcon image= new ImageIcon("KV.png");	//Dateipfad des Bildes , das Bild muss im Ordner liegen
-			this.setIconImage(image.getImage()); 	//Neuse Icon des Frames sein Default ist Java-Icon
+			this.setIconImage(image.getImage()); 	//Neuse Icon des Frames, Default ist Java-Icon
 			
 			JPanel panel = new JPanel();
 			panel.setLayout(new GridLayout(3,0));

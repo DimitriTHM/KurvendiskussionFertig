@@ -155,10 +155,10 @@ public class MyFrame extends JFrame implements ActionListener {
 				p = new Polynom(textField.getText());
 			}else if(ganzzahligesPolynom.isSelected()) {
 				p= new GanzzahligesZufallsPolynom();
-				System.out.println(p);
+				System.out.println(p);	//Polynomausgabe, da man das Polynom nicht kennt
 			}else if(reellesPolynom.isSelected()) {
 				p= new ZufallsPolynom();
-				System.out.println(p);
+				System.out.println(p);	//Polynomausgabe, da man das Polynom nicht kennt
 			}
 			
 			
