@@ -57,7 +57,7 @@ public class Newton {
 		
 		
 		
-		if(iterationen>=maxIterationen) {
+		if(iterationen>=maxIterationen){
 			throw new KeineNullstelleGefundenException("Iteration kommt nach " + iterationen+ " iterationen zu keiner Nullstelle!");
 		}else if(xn==xn2 && xn!=xn1) { //wenn xn = xn2 und xn1 dann Wert gefunden
 			throw new KeineNullstelleGefundenException("Iteration hängt zwischen zwei Werten fest!");

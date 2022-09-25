@@ -75,7 +75,7 @@ import javax.swing.JPanel;
 					}else if(wendepunkte[i][2]<0) {
 						wps += " LR-Wendepunkt bei ( " + wendepunkte[i][0] + " , " + wendepunkte[i][1] + " )";
 					}else {
-						wps += " WP??? bei ( " + wendepunkte[i][0] + " , " + wendepunkte[i][1] + " )";
+						wps += " Kein WP bei ( " + wendepunkte[i][0] + " , " + wendepunkte[i][1] + " )";
 					}
 				}
 				JLabel labelwp= new JLabel("Wendepunkte: "+wps);

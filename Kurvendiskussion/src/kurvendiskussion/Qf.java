@@ -18,11 +18,12 @@ public class Qf { //Sollte vlt ins package newton
 	 * @return Nullstellen des Polynoms
 	 */
 	public static double[]  abcFormel(double[] koef) { //f(x)=ax^2+bx+c
-		double[] nullstellen = new double[2];
+		double[] nullstellen=null;
 		double c=koef[0];	//c
 		double b=koef[1];	//bx
 		double a=koef[2];	//ax^2
 		if(a==0 && b!=0) {
+			nullstellen = new double[1];
 			nullstellen[0]=-c/b;
 		}else if(a==0 && b==0) {
 			throw new ArithmeticException("Polynom ist Konstante");
@@ -32,6 +33,7 @@ public class Qf { //Sollte vlt ins package newton
 				//Ausgabe soll daran erinnern, dass die zwei Nullstellen 0.0 keine Nullstellen sind!!!
 				System.out.println("Das Polynom hat nur 1 Nullstelle in den Reellen Zahlen.");
 			}else {
+			nullstellen = new double[2];
 			nullstellen[0]=(-b+Math.sqrt(Math.pow(b,2)-4*a*c))/(2*a);
 			nullstellen[1]=(-b-Math.sqrt(Math.pow(b,2)-4*a*c))/(2*a);
 			}

@@ -33,11 +33,6 @@ public class NewtonTest {
 		}
 	}
 		
-	@Test
-	public void newtonTestException() {
-		double xWert1=-4 ;	//-4 wirft Exception 
-		assertThrows(KeineNullstelleGefundenException.class,() -> Newton.newton(koef, ableitung, xWert1));
-	}
 	
 	@Test
 	public void newtonTest2() {
@@ -90,4 +85,9 @@ public class NewtonTest {
 		}
 	}
 
+	@Test
+	public void newtonTestException() {
+		double xWert1=-4 ;	//-4 wirft Exception 
+		assertThrows(KeineNullstelleGefundenException.class,() -> Newton.newton(koef, ableitung, xWert1));
+	}
 }
