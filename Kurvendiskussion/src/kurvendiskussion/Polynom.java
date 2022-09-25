@@ -1,6 +1,6 @@
 package kurvendiskussion;
 
-import frame.HilfeFenster;
+import frame.HilfeFrame;
 import frame.MyFrame;
 import newton.KeineNullstelleGefundenException;
 import newton.Newton;
@@ -29,7 +29,7 @@ public class Polynom{
 	
 	private void setKoeffizienten(String polynom) {	
 		String a= polynom.replaceAll("-", "+-");	//ersetzt - mit +- , damit das negative Vorzeichen nicht verloren geht
-		String[] peaces0= a.split("[+]");			//Splittet den String bei +
+		String[] peaces0= a.split("[+]");			//Splittet den String bei +, peaces0[0]="" ist möglich, wird gleich geprüft
 		String[] peaces;
 		double[] koef;						
 		
@@ -83,7 +83,7 @@ public class Polynom{
 	 * Berechnet die Extrema und speichert x-Wert, y-Wert und Art des Extremums in dieser Reihenfolge
 	 */
 	public void setExtrema() {
-		if(koeffizienten.length>2) {
+		if(koeffizienten.length>2) {//Polynom mind. quadratisch?
 			this.extrema=new double[koeffizienten.length-2][3];	
 			double[] nsErsteAbleitung=berechneNullstellen(ersteAbleitung);
 			for(int i =0;i<koeffizienten.length-2;i++) {
@@ -98,7 +98,7 @@ public class Polynom{
 	 * Berechnet den Wendepunkt und speichert x-Wert, y-Wert und Art des Wendepunkts
 	 */
 	public void setWendepunkte() {
-		if(koeffizienten.length>3) {
+		if(koeffizienten.length>3) {//Polynom mind. qubisch?
 			this.wendepunkte=new double[koeffizienten.length-3][3];
 			double[] nsZweiteAbleitung=berechneNullstellen(zweiteAbleitung);
 			for(int i = 0;i<koeffizienten.length-3;i++) {
@@ -169,7 +169,6 @@ public class Polynom{
 		String[] peaces;
 		
 		if(peaces0[0]==""){			//Falls erste Zahl negativ -> (+  ->   +-) -> wegen split erster Platz =""
-			// braucht man nicht peaces= new String[peaces0.length-1];
 			String[] helper=new String[peaces0.length-1];
 			for(int i=0;i<peaces0.length-1;i++) {
 				helper[i]=peaces0[i+1];
@@ -188,7 +187,7 @@ public class Polynom{
 	 */
 	public static double[] coefficientsAsDouble(String[] str) {	
 		
-		//ermittelt den Grad des Polynoms
+		//ermittelt den Grad des Polynoms um ein Array anzulegen
 		int grad=0;
 		for(int i =0;i<str.length;i++) {
 			if(grad(str[i])>grad) {
@@ -198,7 +197,7 @@ public class Polynom{
 		
 		if(grad==0) {
 			System.out.println("Keine Kurvendiskussion für Konstatnten!");
-			new HilfeFenster();
+			new HilfeFrame();
 			System.exit(0);
 		}
 		
@@ -206,7 +205,7 @@ public class Polynom{
 		double[]koef= new double[grad+1];
 		for(int i=0;i<str.length;i++){
 			int index = grad(str[i]);// An welche stelle im Array "koef" kommt der Koeffizient? Z.B. 7x^2, koef[3]=7
-			try {
+			try { //fängt ab wenn Koeffizienten falsch sind
 				if(index>=2) {
 					if(str[i].indexOf("x^")==0) {//bsp. x^2
 						koef[index]=1;
@@ -240,7 +239,7 @@ public class Polynom{
 				}
 			}catch(NumberFormatException e) {
 				System.out.println("Falsche Eingabe der Koeffizienten!");
-				new HilfeFenster();
+				new HilfeFrame();
 				System.exit(0);
 			}
 		}
@@ -254,11 +253,11 @@ public class Polynom{
 	 */
 	public static int grad(String str) {
 		if(str.indexOf("x")>=0) {
-			if(str.indexOf("x^")>=0) {	//>0 abragen
+			if(str.indexOf("x^")>=0) {	
 				try {
 					return Integer.parseInt(str.substring(str.indexOf("x^")+2,str.length()));
 				}catch(NumberFormatException e) {
-					new HilfeFenster();
+					new HilfeFrame();
 					System.exit(0);
 				}
 			}else {
@@ -274,7 +273,7 @@ public class Polynom{
 	 * @return Ableitung des "Polynoms", 
 	 */
 	public static double[] ableitung(double[] coef) {
-		if(coef.length>1) {
+		if(coef.length>1) {//Wenn coef.length = 1 dann ist da sPolynom eine Konstante
 			double[] abl = new double[coef.length-1];
 			for(int i=0;i<abl.length;i++) {
 				abl[i]=coef[i+1]*(i+1);
@@ -299,7 +298,7 @@ public class Polynom{
 		double[] koefPolGrad2;
 		if(koef.length>3) {
 			ns=new double[3];
-			try {		//hier könntre man eine for schleife einbauenn 
+			try {		
 				ns[0]= Newton.newton(koef, ableitung(koef), koef[0]);
 			}catch(KeineNullstelleGefundenException e1) {
 				e1.printStackTrace();

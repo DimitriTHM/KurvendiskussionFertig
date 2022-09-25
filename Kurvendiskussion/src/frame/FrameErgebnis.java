@@ -1,6 +1,5 @@
 package frame;
-//neuste Version
-//Schlüssel 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
+
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -21,7 +20,7 @@ import javax.swing.JPanel;
 		private static final long serialVersionUID = 1L;
 		
 		/**
-		 * erzeugt ein Frame
+		 * erzeugt ein Frame auf dem die Ergebnisse dargestellt werden
 		 * @param ns, berechnete Nullstellen des vorher übergebenen Polynoms
 		 * @param extrema
 		 * @param wendepunkte
@@ -31,7 +30,7 @@ import javax.swing.JPanel;
 			this.setTitle("Kurvendiskussion Ergebnis");	//Titel des Frames
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	// beim Schließen des Fensters wird die Ausführung abgeschlossen
 			
-			ImageIcon image= new ImageIcon("KV.png");	//Dateipfad des Bildes , das Bild muss im Ordner liegen
+			ImageIcon image= new ImageIcon("React.png");	//Dateipfad des Bildes , das Bild muss im Ordner liegen
 			this.setIconImage(image.getImage()); 	//Neuse Icon des Frames, Default ist Java-Icon
 			
 			JPanel panel = new JPanel();

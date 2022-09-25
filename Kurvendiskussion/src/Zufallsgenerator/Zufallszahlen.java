@@ -11,7 +11,7 @@ public class Zufallszahlen {
 	public Zufallszahlen() {
 		double[] coef= new double[4];
 		for(int i=0;i<4;i++) {
-			if(Math.random()<0.5) {
+			if(Math.random()<0.5) {// abfrage ob der Koeffizient negativ oder positiv ist
 				coef[i]=-Math.random()*100;
 			}else {
 				coef[i]=Math.random()*100;

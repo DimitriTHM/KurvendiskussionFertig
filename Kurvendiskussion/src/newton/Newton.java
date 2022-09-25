@@ -13,9 +13,7 @@ public class Newton {
 	
 
 	/**
-	 * Die Methode macht mindestens 3 Iterationsschritte. D.h. wenn xWert schon die Nullstelle ist,
-	 * wird trotzdem iteriert. 
-	 * @throws KeineNullstelleGefundenException 
+	 * Newtonverfahren zur Berechnung einer Nullstelle
 	 * @param koef, Koeffizienten des Polynoms
 	 * @param ableitung
 	 * @param xWert, Startpunkt der Iteration
@@ -46,6 +44,7 @@ public class Newton {
 		xn2=xn1-Calculator.calculate(koef, xn1)/Calculator.calculate(ableitung, xn1);
 		iterationen+=1;
 		
+		
 		do{
 		xn=xn1;
 		xn1=xn2;
@@ -59,7 +58,7 @@ public class Newton {
 		
 		if(iterationen>=maxIterationen){
 			throw new KeineNullstelleGefundenException("Iteration kommt nach " + iterationen+ " iterationen zu keiner Nullstelle!");
-		}else if(xn==xn2 && xn!=xn1) { //wenn xn = xn2 und xn1 dann Wert gefunden
+		}else if(xn==xn2 && xn!=xn1) { //wenn xn = xn2 = xn1 dann Wert gefunden
 			throw new KeineNullstelleGefundenException("Iteration hängt zwischen zwei Werten fest!");
 		}else{
 			System.out.println("Iteration hat nach " + iterationen + " iterationen die Nullstelle "+ xn2+" gefunden");

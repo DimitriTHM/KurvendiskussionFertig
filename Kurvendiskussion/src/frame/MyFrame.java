@@ -23,18 +23,13 @@ import kurvendiskussion.Polynom;
 
 /**
  * Benutzeroberfläche
- * Quelle: 
- * 
- *
  */
 public class MyFrame extends JFrame implements ActionListener {
 		
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;// nachschauen
 	//erstellen der verwendeten Tools
-	JButton button;
+	JButton berechnen;
 	JButton hilfe;
 	JTextField textField;
 	JCheckBox[] checkBox;
@@ -56,11 +51,13 @@ public class MyFrame extends JFrame implements ActionListener {
 	
 
 		ImageIcon image= new ImageIcon("React.png");	//Dateipfad des Bildes , das Bild muss im Ordner liegen
-		//https://studyflix.de/mathematik/kurvendiskussion-3076
+		//Quelle des Bildes
 		//https://de.wikipedia.org/wiki/React
 		this.setIconImage(image.getImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)); 	//Neues Icon des Frames, Default ist Java-Icon
-		button= new JButton("berechnen");
-		button.addActionListener(this);	//prüft ob der Button angeklickt  wurde
+		
+		berechnen= new JButton("berechnen");
+		berechnen.addActionListener(this);	//prüft ob der Button angeklickt  wurde
+		
 		hilfe= new JButton("Hilfe");
 		hilfe.addActionListener(this);
 		
@@ -91,6 +88,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		panel1.setLayout(new GridLayout(4,0));
 		label1=new JLabel("Art des Polynoms");
 		panel1.setBackground(Color.gray);
+		
 		eigenesPolynom= new JRadioButton("Eigenes Polynom",true);	//Radiobutton, damit nur eins ausgewählt werden kann
 		ganzzahligesPolynom= new JRadioButton("Ganzzahliges Zufallspolynom");
 		reellesPolynom= new JRadioButton("Reelles Zufallspolynom");
@@ -106,6 +104,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		ganzzahligesPolynom.addActionListener(this);
 		reellesPolynom.addActionListener(this);
 		
+		//Feld zur Eingabe des Polynoms
 		textField= new JTextField("Gib hier dein Polynom 3.Grades ein.");
 		textField.setPreferredSize(new Dimension(250,40));	//Größe des Textfeldes
 		textField.setToolTipText("Polynom"); //Wenn man mit der Maus draufgeht erscheint Polynom
@@ -113,7 +112,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		//Buttons hinzufügen
 		panel2= new JPanel();
 		panel2.setLayout(new GridLayout(2,0));
-		panel2.add(button);
+		panel2.add(berechnen);
 		panel2.add(hilfe);
 		
 		//hinzufügen zu JFrame
@@ -136,7 +135,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		
 		
 		if(e.getSource()==hilfe) {
-			new HilfeFenster();
+			new HilfeFrame();
 		}
 		
 		//welcher Radiobutton wurde gewählt
@@ -149,7 +148,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		}
 		
 		//dementsprechend ein neues Polynom erzeugen/eingeben
-		if(e.getSource()==button) {
+		if(e.getSource()==berechnen) {
 			Polynom p=null;
 			if(eigenesPolynom.isSelected()) {
 				p = new Polynom(textField.getText());

@@ -8,6 +8,7 @@ package kurvendiskussion;
 public class Calculator {
 	
 	/**
+	 * berechnet den Funktionswert
 	 * @param koef, Koeffizienten des Polynoms
 	 * @param x, an dieser Stelle soll das Polynom ausgewertet werden
 	 * @return gibt den Wert des Polynoms an der Stelle x zurück
@@ -21,7 +22,7 @@ public class Calculator {
 	}
 	
 	/**
-	 * 
+	 * ermittelt Art des Extremums
 	 * @param zweiteAbleitung, Koeffizienten der zweiten Ableitung
 	 * @param nullstelleErsteAbleitung, eine Nullstelle der ersten Ableitung
 	 * @return -1 bedeutet Minimum
@@ -43,7 +44,7 @@ public class Calculator {
 	}
 	
 	/**
-	 * 
+	 * ermittelt Art des Wendepunktes
 	 * @param dritteAbleitung, Koeffizienten der 3. Ableitung
 	 * @param nullstelleZweiteAbleitung, eine Nullstelle der 2. Ableitung
 	 * @return -1 bedeutet LR-Wendepunkt
@@ -53,8 +54,6 @@ public class Calculator {
 	public static int wendepunkte(double[] dritteAbleitung, double nullstelleZweiteAbleitung) {	
 		
 		double ergebnis=calculate(dritteAbleitung, nullstelleZweiteAbleitung);
-		//falls hier null als ergebnis  rauskommt könnte man etwas links und etwas rechts von der Wendestelle den wert der zweiten ableitung ermitteln und dadurch den wp festlegen
-		//man könnte es auch nur mit der zweiten ABleitung machen
 		if(ergebnis>0) {
 			return 1; 
 		}else if(ergebnis<0) {

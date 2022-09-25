@@ -1,19 +1,17 @@
 package kurvendiskussion;
 
-import static org.junit.Assume.assumeNoException;
-
 //Dimitri Brunz,Sara Musiol, Version:2021-06 (4.20.0) Datum:.20.01.2022
-import jserver.Dialogs;
+
 
 /**
  * Klasse zur Berechnung quadratischer Funktionen
  *
  *
  */
-public class Qf { //Sollte vlt ins package newton
+public class Qf { 
 	
 	/**
-	 * Nutzt ABC-Formel zur Berechnung der Nullstellen
+	 * Nutzt ABC-Formel zur Berechnung der Nullstellen quadratischer Polynome
 	 * @param koef, Koeffizienten des Polynoms
 	 * @return Nullstellen des Polynoms
 	 */
@@ -31,7 +29,7 @@ public class Qf { //Sollte vlt ins package newton
 			if(Math.pow(b, 2)<(4*a*c)) {
 				//throw new ArithmeticException("Imaginäre Nullstellen"); ausgeklammert , weil Zufallspolynome zu oft imaginäre Nullstellen haben
 				//Ausgabe soll daran erinnern, dass die zwei Nullstellen 0.0 keine Nullstellen sind!!!
-				System.out.println("Das Polynom hat nur 1 Nullstelle in den Reellen Zahlen.");
+				System.out.println("Das Polynom hat nur 1 Nullstelle in den reellen Zahlen.");//überarbeiten
 			}else {
 			nullstellen = new double[2];
 			nullstellen[0]=(-b+Math.sqrt(Math.pow(b,2)-4*a*c))/(2*a);

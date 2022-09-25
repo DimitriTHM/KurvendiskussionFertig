@@ -1,8 +1,6 @@
 package frame;
 
-import kurvendiskussion.Polynom;
-
-public class TestFrame {
+public class Start {
 	
 	public static void main(String[] args) {
 		new MyFrame();
@@ -13,6 +11,7 @@ public class TestFrame {
 		
 		//x^3-3x^2
 		//x^9-5x^3// funktioniert noch nicht
+		//x^3 wird bei abc formel nicht richtig berechnet
 		
 	}
 }

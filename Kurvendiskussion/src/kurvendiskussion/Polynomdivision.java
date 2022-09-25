@@ -20,10 +20,10 @@ public class Polynomdivision {
 		//Bsp.: (3x^3-22x^2+53x-90):(x-5)	=(3x^2-7x+18)	+0/(x-5)
 		//       Divident          :Divisor	=Quotient 		+ Rest
 			
-		int grad=divident.length-1;
+		int grad=divident.length-1;//grad des Quotienten+1
 		double[] quotient = new double[grad];	
 		double[] rest = new double[grad + 1];
-	    int i = divisor.length-1; //	i = Grad den der Quotient höchstens annehmen kann
+	    int i = divisor.length-1; 
 	    int gradDivisor = i;
 	    double koeff = divisor[i];
 	    /*
@@ -36,20 +36,22 @@ public class Polynomdivision {
 	    rest = Arrays.copyOf(divident, divident.length);
 	    
 	    for (int j = grad; j >= gradDivisor; j--) {
-	      faktor = rest[j] / koeff;
-	      quotient[j - gradDivisor] = faktor;
+	    	
+	    	//faktor ermitteln
+	    	faktor = rest[j] / koeff;
+	    	quotient[j - gradDivisor] = faktor;
 	      
-	      if (faktor != 0.0) {
-	        // ausmultiplizieren
-	    	  double[] zwischenErgebnis = new double[grad + 1];	
-	        for (int k = 0; k <= gradDivisor; k++) {
-	          zwischenErgebnis[k+ j - gradDivisor] = faktor * divisor[k];       
-	        }
-	        // subtrahieren
-	        for (int k = 0; k <= grad; k++) {
-	          rest[k] -= zwischenErgebnis[k];
-	        }
-	      }
+	    	if (faktor != 0.0) {
+	    		// ausmultiplizieren
+	    		double[] zwischenErgebnis = new double[grad + 1];	
+	    		for (int k = 0; k <= gradDivisor; k++) {
+	    		zwischenErgebnis[k+ j - gradDivisor] = faktor * divisor[k];       
+	    		}
+	    		// subtrahieren
+	    		for (int k = 0; k <= grad; k++) {
+	    			rest[k] -= zwischenErgebnis[k];
+	    		}
+	    	}
 	    }
 	   return quotient;
 	   
