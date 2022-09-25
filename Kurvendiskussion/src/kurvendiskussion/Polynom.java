@@ -293,7 +293,7 @@ public class Polynom{
 	 * @param koef, Koeffizienten des Polynoms
 	 * @return berechnete Nullstellen des Polynomms
 	 */
-	public double[] berechneNullstellen(double[] koef) {	
+	public double[] berechneNullstellen(double[] koef) {
 		double[] ns;
 		double[] koefPolGrad2;
 		if(koef.length>3) {
