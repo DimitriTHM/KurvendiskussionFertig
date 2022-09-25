@@ -34,6 +34,7 @@ class QfTest {
 	   double[] poly = {1,0,1};
 	   double[] expected= null;
 	   assertArrayEquals(expected,Qf.abcFormel(poly));
+	   
 	}
 	
 	@Test

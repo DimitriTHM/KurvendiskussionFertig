@@ -5,7 +5,7 @@ import java.util.Arrays;
  *
  * @author frank
  * Erlaubnis wurde über GitHub erteilt.
- *
+ * MartinNiemllerSchule/lk1314
  */
 public class Polynomdivision {
 	

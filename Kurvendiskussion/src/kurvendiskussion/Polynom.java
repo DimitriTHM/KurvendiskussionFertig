@@ -63,6 +63,9 @@ public class Polynom{
 		return dritteAbleitung;
 	}
 	
+	public void setNullstellen() {	
+		this.nullstellen=berechneNullstellen(koeffizienten);
+	}
 	
 	public double[] getNullstellen() {
 		return nullstellen;
@@ -74,6 +77,37 @@ public class Polynom{
 
 	public double[][] getWendepunkte() {
 		return wendepunkte;
+	}
+	
+	/**
+	 * Berechnet die Extrema und speichert x-Wert, y-Wert und Art des Extremums in dieser Reihenfolge
+	 */
+	public void setExtrema() {
+		if(koeffizienten.length>2) {
+			this.extrema=new double[koeffizienten.length-2][3];	
+			double[] nsErsteAbleitung=berechneNullstellen(ersteAbleitung);
+			for(int i =0;i<koeffizienten.length-2;i++) {
+				extrema[i][0]=nsErsteAbleitung[i];
+				extrema[i][1]=Calculator.calculate(koeffizienten, nsErsteAbleitung[i]);
+				extrema[i][2]=Calculator.extrema(zweiteAbleitung, extrema[i][0]);
+			}
+		}	
+	}
+	
+	/**
+	 * Berechnet den Wendepunkt und speichert x-Wert, y-Wert und Art des Wendepunkts
+	 */
+	public void setWendepunkte() {
+		if(koeffizienten.length>3) {
+			this.wendepunkte=new double[koeffizienten.length-3][3];
+			double[] nsZweiteAbleitung=berechneNullstellen(zweiteAbleitung);
+			for(int i = 0;i<koeffizienten.length-3;i++) {
+				wendepunkte[i][0]=nsZweiteAbleitung[i];
+				wendepunkte[i][1]=Calculator.calculate(koeffizienten, nsZweiteAbleitung[i]);
+				wendepunkte[i][2]=Calculator.wendepunkte(dritteAbleitung, nsZweiteAbleitung[i]);
+			}
+		}
+		
 	}
 
 	/**
@@ -252,14 +286,14 @@ public class Polynom{
 		}
 	}
 	
+	
+	
+	
 	/**
-	 * Ruft die Berechnung der Nullstellen auf und setzt diese in das Array this.nullstellen
+	 * berechnet die Nullstellen des übergebenen Polynoms
+	 * @param koef, Koeffizienten des Polynoms
+	 * @return berechnete Nullstellen des Polynomms
 	 */
-	public void setNullstellen() {	
-		this.nullstellen=berechneNullstellen(koeffizienten);
-	
-	}
-	
 	public double[] berechneNullstellen(double[] koef) {	
 		double[] ns;
 		double[] koefPolGrad2;
@@ -290,36 +324,7 @@ public class Polynom{
 	
 	}
 	
-	/**
-	 * Berechnet die Extrema und speichert x-Wert, y-Wert und Art des Extremums in dieser Reihenfolge
-	 */
-	public void setExtrema() {
-		if(koeffizienten.length>2) {
-			this.extrema=new double[koeffizienten.length-2][3];	
-			double[] nsErsteAbleitung=berechneNullstellen(ersteAbleitung);
-			for(int i =0;i<koeffizienten.length-2;i++) {
-				extrema[i][0]=nsErsteAbleitung[i];
-				extrema[i][1]=Calculator.calculate(koeffizienten, nsErsteAbleitung[i]);
-				extrema[i][2]=Calculator.extrema(zweiteAbleitung, extrema[i][0]);
-			}
-		}	
-	}
 	
-	/**
-	 * Berechnet den Wendepunkt und speichert x-Wert, y-Wert und Art des Wendepunkts
-	 */
-	public void setWendepunkte() {
-		if(koeffizienten.length>3) {
-			this.wendepunkte=new double[koeffizienten.length-3][3];
-			double[] nsZweiteAbleitung=berechneNullstellen(zweiteAbleitung);
-			for(int i = 0;i<koeffizienten.length-3;i++) {
-				wendepunkte[i][0]=nsZweiteAbleitung[i];
-				wendepunkte[i][1]=Calculator.calculate(koeffizienten, nsZweiteAbleitung[i]);
-				wendepunkte[i][2]=Calculator.wendepunkte(dritteAbleitung, nsZweiteAbleitung[i]);
-			}
-		}
-		
-	}
 	
 }
   
