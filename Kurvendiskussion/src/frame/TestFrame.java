@@ -1,6 +1,6 @@
 package frame;
 
-public class Start {
+public class TestFrame {
 	
 	public static void main(String[] args) {
 		new MyFrame();

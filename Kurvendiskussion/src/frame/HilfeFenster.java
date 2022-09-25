@@ -10,12 +10,12 @@ import javax.swing.JLabel;
  * wird nach Anklicken des "Hilfe"-Buttons erzeugt und soll bei der Eingabe helfen
  *
  */
-public class HilfeFrame {
+public class HilfeFenster {
 	
 	JDialog hilfeDialog;
 	JLabel[] label= new JLabel[6];
 	
-	public HilfeFrame() {
+	public HilfeFenster() {
 		
 		hilfeDialog = new JDialog();
 		hilfeDialog.setTitle("Bedienungshilfe");

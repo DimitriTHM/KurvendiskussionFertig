@@ -135,7 +135,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		
 		
 		if(e.getSource()==hilfe) {
-			new HilfeFrame();
+			new HilfeFenster();
 		}
 		
 		//welcher Radiobutton wurde gewählt

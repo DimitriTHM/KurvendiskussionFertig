@@ -1,6 +1,6 @@
 package kurvendiskussion;
 
-import frame.HilfeFrame;
+import frame.HilfeFenster;
 import frame.MyFrame;
 import newton.KeineNullstelleGefundenException;
 import newton.Newton;
@@ -197,7 +197,7 @@ public class Polynom{
 		
 		if(grad==0) {
 			System.out.println("Keine Kurvendiskussion für Konstatnten!");
-			new HilfeFrame();
+			new HilfeFenster();
 			System.exit(0);
 		}
 		
@@ -239,7 +239,7 @@ public class Polynom{
 				}
 			}catch(NumberFormatException e) {
 				System.out.println("Falsche Eingabe der Koeffizienten!");
-				new HilfeFrame();
+				new HilfeFenster();
 				System.exit(0);
 			}
 		}
@@ -257,7 +257,7 @@ public class Polynom{
 				try {
 					return Integer.parseInt(str.substring(str.indexOf("x^")+2,str.length()));
 				}catch(NumberFormatException e) {
-					new HilfeFrame();
+					new HilfeFenster();
 					System.exit(0);
 				}
 			}else {
